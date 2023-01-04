@@ -12,6 +12,7 @@ import type { IPriorities } from "./PriorityImports.js";
 import "./CharacterCreator.css";
 import React from "react";
 import { QualitiesSelect } from "./QualitiesSelect.js";
+import type { ISelectedQuality } from "./QualitiesSelect.js";
 
 const characterCreatorPath = "/character_creator";
 const CharacterCreator = function () {
@@ -39,6 +40,13 @@ const CharacterCreator = function () {
       edge: 0,
       magic: 0,
     });
+  const [karmaPoints, setKarmaPoints] = useState(25);
+  const [positiveQualitiesSelected, setPositiveQualitiesSelected] = useState<
+    Array<ISelectedQuality>
+  >([]);
+  const [negativeQualitiesSelected, setNegativeQualitiesSelected] = useState<
+    Array<ISelectedQuality>
+  >([]);
   const [page, setPage] = useState(0);
   const firstPage = 0;
   const lastPage = 2;
@@ -77,7 +85,16 @@ const CharacterCreator = function () {
       );
       break;
     case lastPage:
-      currentStage = <QualitiesSelect />;
+      currentStage = (
+        <QualitiesSelect
+          karmaPoints={karmaPoints}
+          setKarmaPoints={setKarmaPoints}
+          positiveQualitiesSelected={positiveQualitiesSelected}
+          setPositiveQualitiesSelected={setPositiveQualitiesSelected}
+          negativeQualitiesSelected={negativeQualitiesSelected}
+          setNegativeQualitiesSelected={setNegativeQualitiesSelected}
+        />
+      );
       break;
     default:
       currentStage = (

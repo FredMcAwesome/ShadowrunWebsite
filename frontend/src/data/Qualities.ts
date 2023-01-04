@@ -60,7 +60,43 @@ export enum QualityEnum {
   WeakImmuneSystem,
 }
 
-type CostRange = Array<number>;
+export enum QualitySubqualityEnum {
+  HomeGround_AstralAcclimation,
+  HomeGround_YouKnowAGuy,
+  HomeGround_DigitalTurf,
+  HomeGround_TheTransporter,
+  HomeGround_OnTheLam,
+  HomeGround_StreetPolitics,
+  Addition_Mild,
+  Addition_Moderate,
+  Addition_Severe,
+  Addition_Burnout,
+  Alergy_Uncommon_Mild,
+  Alergy_Uncommon_Moderate,
+  Alergy_Uncommon_Severe,
+  Alergy_Uncommon_Extreme,
+  Alergy_Common_Mild,
+  Alergy_Common_Moderate,
+  Alergy_Common_Severe,
+  Alergy_Common_Extreme,
+  Prejudiced_CommonGroup_Biased,
+  Prejudiced_CommonGroup_Outspoken,
+  Prejudiced_CommonGroup_Radical,
+  Prejudiced_SpecificGroup_Biased,
+  Prejudiced_SpecificGroup_Outspoken,
+  Prejudiced_SpecificGroup_Radical,
+  Scorched_MemoryLossShort,
+  Scorched_MemoryLossLong,
+  Scorched_Blackout,
+  Scorched_Migraines,
+  Scorched_ParanoiaAnxiety,
+  SINnerLayered_NationalSIN,
+  SINnerLayered_CriminalSIN,
+  SINnerLayered_CorporateLimitedSIN,
+  SINnerLayered_CorporateSIN,
+}
+
+export type CostRange = Array<number>;
 
 export interface IQuality {
   name: string;
@@ -69,10 +105,16 @@ export interface IQuality {
   cost: number | CostRange;
   maxRating?: number;
   description: string;
-  subchoices?: Array<string>;
+  subqualities?: Array<ISubquality>;
+}
+export interface ISubquality {
+  name: string;
+  id: QualitySubqualityEnum;
+  description: string;
+  cost?: number;
 }
 
-export const Qualities: Array<IQuality> = [
+const unfrozenQualities: Array<IQuality> = [
   {
     name: "Ambidextrous",
     id: QualityEnum.Ambidextrous,
@@ -202,13 +244,43 @@ export const Qualities: Array<IQuality> = [
     cost: 10,
     description:
       "If a character knows her neighborhood better than anyone—the shortcuts, the hiding places, and the people she can trust—then she probably has the Home Ground quality. She knows the families who live there, their stories, and what the kids who moved out are doing; she knows the streets better than GridGuide, knows things that aren't on GridGuide, and knows when GridGuide is wrong. She knows the politics of the gangs, who's running for whom and who's running from whom. But it's not just the physical streets. Depending on the character, her Home Ground quality can manifest in ways specific to who and what she is. When choosing this quality, select one of the bonuses below:",
-    subchoices: [
-      "Astral Acclimation: The character has become acclimated to the background count of her Home Ground. Through a lifetime of familiarity she's learned to work around it, enabling her to ignore up to two points of background count. For example, if the background count on her Home Ground is 3, she sees only a reduction of 1 to her Magic tests; if the background count is 5, for her it is only a 3, and so on. This quality works only on her Home Ground and has no benefit anywhere else.",
-      "You Know a Guy: The character has built uplong-lasting relationships with people from her neighborhood. These people are not contacts, but they know her as one of their own and are more likely to do favors for or talk to her. NPCs from the character's Home Ground neighborhood are considered friendly toward her wherever she encounters them (unless she has done something to change that).The character receives +2 Street Cred for any Negotiation with people from her Home Ground.",
-      "Digital Turf: This is for a decker or technomancer who has a specific host that she calls her own. She may actually own the spot, or it can be a place she frequents enough to consider home. The character receives a +2 bonus to Matrix Tests while in her Home Ground host. Bonuses from other Qualities may stack with Home Ground. If the character has not frequented this host for more than six months, she loses the Home Ground quality because she is no longer as familiar as she should be.",
-      "The Transporter: This character knows the layout of streets, back alleys, service tunnels, etc., like the back of her hand. She knows when GridGuide is wrong and when GridGuide is out of date. When the transporter is on her Home Ground, she has a +2 dice pool modifier for Evasion Tests.",
-      "On the Lam: Hiding out and lying low are part of a shadowrunner's daily life. On the Lam means a character has an encyclopedic knowledge of safehouses, bolt holes, abandoned buildings, just about any out-of-the-way place not claimed by gangs or squatters. When she needs to find a safe location in a hurry, this character receives a +2 dice pool bonus to her Intuition + appropriate street knowledge skill to find a suitable place to hole up fast.",
-      "Street Politics: This character knows the street gangs, the criminal operations, and the beneath-the-surface affiliations that are the social and political fabric of her Home Ground. She receives a +2 dice pool modifier for Knowledge Tests relating to gangs or their operations.",
+    subqualities: [
+      {
+        name: "Astral Acclimation",
+        id: QualitySubqualityEnum.HomeGround_AstralAcclimation,
+        description:
+          "The character has become acclimated to the background count of her Home Ground. Through a lifetime of familiarity she's learned to work around it, enabling her to ignore up to two points of background count. For example, if the background count on her Home Ground is 3, she sees only a reduction of 1 to her Magic tests; if the background count is 5, for her it is only a 3, and so on. This quality works only on her Home Ground and has no benefit anywhere else.",
+      },
+      {
+        name: "You Know a Guy",
+        id: QualitySubqualityEnum.HomeGround_YouKnowAGuy,
+        description:
+          "The character has built uplong-lasting relationships with people from her neighborhood. These people are not contacts, but they know her as one of their own and are more likely to do favors for or talk to her. NPCs from the character's Home Ground neighborhood are considered friendly toward her wherever she encounters them (unless she has done something to change that).The character receives +2 Street Cred for any Negotiation with people from her Home Ground.",
+      },
+      {
+        name: "Digital Turf",
+        id: QualitySubqualityEnum.HomeGround_DigitalTurf,
+        description:
+          "This is for a decker or technomancer who has a specific host that she calls her own. She may actually own the spot, or it can be a place she frequents enough to consider home. The character receives a +2 bonus to Matrix Tests while in her Home Ground host. Bonuses from other Qualities may stack with Home Ground. If the character has not frequented this host for more than six months, she loses the Home Ground quality because she is no longer as familiar as she should be.",
+      },
+      {
+        name: "The Transporter",
+        id: QualitySubqualityEnum.HomeGround_TheTransporter,
+        description:
+          " This character knows the layout of streets, back alleys, service tunnels, etc., like the back of her hand. She knows when GridGuide is wrong and when GridGuide is out of date. When the transporter is on her Home Ground, she has a +2 dice pool modifier for Evasion Tests.",
+      },
+      {
+        name: "On the Lam",
+        id: QualitySubqualityEnum.HomeGround_OnTheLam,
+        description:
+          " Hiding out and lying low are part of a shadowrunner's daily life. On the Lam means a character has an encyclopedic knowledge of safehouses, bolt holes, abandoned buildings, just about any out-of-the-way place not claimed by gangs or squatters. When she needs to find a safe location in a hurry, this character receives a +2 dice pool bonus to her Intuition + appropriate street knowledge skill to find a suitable place to hole up fast.",
+      },
+      {
+        name: "Street Politics",
+        id: QualitySubqualityEnum.HomeGround_StreetPolitics,
+        description:
+          " This character knows the street gangs, the criminal operations, and the beneath-the-surface affiliations that are the social and political fabric of her Home Ground. She receives a +2 dice pool modifier for Knowledge Tests relating to gangs or their operations.",
+      },
     ],
   },
   {
@@ -341,11 +413,35 @@ export const Qualities: Array<IQuality> = [
     cost: [4, 9, 20, 25],
     description:
       "A character with the Addiction quality is hooked on chemical substances, such as street drugs (novacoke, bliss, tempo); technological or magical devices, such as better-than-life (BTL) chips or foci; or potentially ad dictive activities such as gambling or sex. Physiological Addictions affect the Body's functions, producing pain, nausea, shakes, and other side effects that can impair the runner, particularly during withdrawal. Some possible effects of psychological Addictions include paranoia, anxiety, insomnia, poor concentration, mood disorders, and depression. The bonus Karma value of this quality depends on how severe the addiction is. Levels of addiction include: Mild, Moderate, Severe, or Burnout. Addictions get worse over prolonged periods of time without treatment. Each level of Addiction has a starting dosage level that tells the character how much of a substance or activity they must use for a craving to be sated. This level can be increased if the character has augmentations. The more severe a character's Addiction, the more substance or time devoted to the activity he needs to satisfy his cravings. At the lower end of the spectrum for the Addiction quality (Mild, Moderate), it is easier to hide the effects of an Addiction. At the most severe levels (Severe, Burnout), there are noticeable physical and mental signs of Addiction. These signs negatively impact his Social Tests even if he is not suffering the effects of withdrawal. The gamemaster has discretion as to whether or not she should call for Withdrawal Tests during an Addicted character's downtime, depending on to what degree the gamemaster wants the addiction to impact gameplay for the character.",
-    subchoices: [
-      "Mild (4 Karma)/1 dose or 1 hour of habit-related activity: Mild cravings occur once a month for the character. If a character fails his Withdrawal Test, he suffers symptoms of withdrawal and must actively seek out and use the substance or engage in the activity to find relief. On a run, this could mean delaying plans that the runner team may have meticulously put together for a job, especially if the character is busy gambling with a bookie or slotting a BTL instead of being available for the run. While the character is suffering withdrawal symptoms, apply a -2 dice pool modifier to all of the character's Mental-attribute-based tests (if psychological dependency) or to all the character's Physical-attribute-based tests (if physiological dependency). If the character succeeds on his Withdrawal Test, the character does not suffer withdrawal symptoms and does not need the substance or participate in that habit until the character makes their next Withdrawal Test (in one month). He is able to stay clean for that month.",
-      "Moderate (9 Karma)/1 dose or 1 hour of habit-related activity: A craving at the Moderate level occurs roughly every two weeks. If the character experiences withdrawal, he suffers a -4 to all Mental-attribute-based tests (if psychological dependency) or -4 to all Physical-attribute-based tests (if physiological dependency) until the craving is satisfied.",
-      "Severe (20 Karma)/2 doses or 2 hours of habit-related activity: The addiction is spiraling out of control. The addict experiences cravings once a week. If he fails a Withdrawal Test, he suffers a -4 dice pool modifier to either their Mental- or Physical-based tests (as appropriate for their dependency) while in withdrawal. In addition, he suffers a -2 dice pool modifier to all Social Tests, whether he is in withdrawal or not. It is all but impossible now for the character to hide his addiction, even when he's had his fix. The physical and psychological symptoms of the damage caused by his Addiction are readily apparent to the close observer.",
-      "Burnout (25 Karma) 3 doses/3 hours (minimum) of habit-related activity: Burnout is the final progression of the Addiction quality. The addict experiences cravings for their drug or habit of choice every day. Until they satisfy their craving with a fix, the character suffers a -6 penalty to either his Mental- or Physical-based tests (whichever one is appropriate for their dependency) while in withdrawal. Because his Addiction is now obvious to even the most casual observer, the character suffers a –3 dice pool modifier for all Social Tests, whether he is in withdrawal or not.",
+    subqualities: [
+      {
+        name: "Mild/1 dose or 1 hour of habit-related activity",
+        id: QualitySubqualityEnum.Addition_Mild,
+        description:
+          "Mild cravings occur once a month for the character. If a character fails his Withdrawal Test, he suffers symptoms of withdrawal and must actively seek out and use the substance or engage in the activity to find relief. On a run, this could mean delaying plans that the runner team may have meticulously put together for a job, especially if the character is busy gambling with a bookie or slotting a BTL instead of being available for the run. While the character is suffering withdrawal symptoms, apply a -2 dice pool modifier to all of the character's Mental-attribute-based tests (if psychological dependency) or to all the character's Physical-attribute-based tests (if physiological dependency). If the character succeeds on his Withdrawal Test, the character does not suffer withdrawal symptoms and does not need the substance or participate in that habit until the character makes their next Withdrawal Test (in one month). He is able to stay clean for that month.",
+        cost: 4,
+      },
+      {
+        name: "Moderate/1 dose or 1 hour of habit-related activity",
+        id: QualitySubqualityEnum.Addition_Moderate,
+        description:
+          "A craving at the Moderate level occurs roughly every two weeks. If the character experiences withdrawal, he suffers a -4 to all Mental-attribute-based tests (if psychological dependency) or -4 to all Physical-attribute-based tests (if physiological dependency) until the craving is satisfied.",
+        cost: 9,
+      },
+      {
+        name: "Severe/2 doses or 2 hours of habit-related activity",
+        id: QualitySubqualityEnum.Addition_Severe,
+        description:
+          "The addiction is spiraling out of control. The addict experiences cravings once a week. If he fails a Withdrawal Test, he suffers a -4 dice pool modifier to either their Mental- or Physical-based tests (as appropriate for their dependency) while in withdrawal. In addition, he suffers a -2 dice pool modifier to all Social Tests, whether he is in withdrawal or not. It is all but impossible now for the character to hide his addiction, even when he's had his fix. The physical and psychological symptoms of the damage caused by his Addiction are readily apparent to the close observer.",
+        cost: 20,
+      },
+      {
+        name: "Burnout 3 doses/3 hours (minimum) of habit-related activity",
+        id: QualitySubqualityEnum.Addition_Burnout,
+        description:
+          "Burnout is the final progression of the Addiction quality. The addict experiences cravings for their drug or habit of choice every day. Until they satisfy their craving with a fix, the character suffers a -6 penalty to either his Mental- or Physical-based tests (whichever one is appropriate for their dependency) while in withdrawal. Because his Addiction is now obvious to even the most casual observer, the character suffers a -3 dice pool modifier for all Social Tests, whether he is in withdrawal or not.",
+        cost: 25,
+      },
     ],
   },
   {
@@ -355,15 +451,63 @@ export const Qualities: Array<IQuality> = [
     cost: [5, 10, 15, 20, 10, 15, 20, 25],
     description:
       "A character with the Allergy quality is allergic to a substance or condition found in their environment. The value of this quality depends on two factors. The first is whether the substance or condition is Uncommon (2 Karma) or Common (7 Karma). Next, determine the severity of the symptoms: Mild (3 Karma), Moderate (8 Karma), Severe (13 Karma), or Extreme (18 Karma). Add the appropriate point values together to find the final value. For example, the value of an Uncommon Moderate Allergy (Silver) is 10 Karma (2+8 Karma). If a character is attacked with a substance to which they are allergic, they lose 1 die from their Resistance Test for each stage of severity of the Allergy (e.g., 1 die for a Mild allergy, 2 dice for a Moderate allergy, etc.).",
-    subchoices: [
-      "Uncommon, Mild",
-      "Uncommon, Moderate",
-      "Uncommon, Severe",
-      "Uncommon, Extreme",
-      "Common, Mild",
-      "Common, Moderate",
-      "Common, Severe",
-      "Common, Extreme",
+    subqualities: [
+      {
+        name: "Uncommon, Mild",
+        id: QualitySubqualityEnum.Alergy_Uncommon_Mild,
+        description:
+          "The substance or condition is rare for the local environment. Examples: silver, gold, antibiotics, grass. Symptoms are discomfiting and distracting. Apply a -2 dice pool modifier to the character's Physical Tests while under the effects of the Allergy.",
+        cost: 5,
+      },
+      {
+        name: "Uncommon, Moderate",
+        id: QualitySubqualityEnum.Alergy_Uncommon_Moderate,
+        description:
+          "The substance or condition is rare for the local environment. Examples: silver, gold, antibiotics, grass. Contact with the allergen produces intense pain. Apply a -4 dice pool modifier to all Physical Tests made while a character experiences the symptoms.",
+        cost: 10,
+      },
+      {
+        name: "Uncommon, Severe",
+        id: QualitySubqualityEnum.Alergy_Uncommon_Severe,
+        description:
+          "The substance or condition is rare for the local environment. Examples: silver, gold, antibiotics, grass. Contact with the allergen results in extreme pain and actual physical damage. Apply a -4 dice pool modifier to all tests made while a character experiences symptoms. The character also suffers 1 box of Physical Damage (unresisted) for every 1 minute they are exposed to the allergen.",
+        cost: 15,
+      },
+      {
+        name: "Uncommon, Extreme",
+        id: QualitySubqualityEnum.Alergy_Uncommon_Extreme,
+        description:
+          "The substance or condition is rare for the local environment. Examples: silver, gold, antibiotics, grass. A character at this level, when exposed to the allergen, goes into full anaphylactic shock. The character receives a -6 dice pool modifier for anything they do. The character is considered to be in excruciating agony. The character suffers 1 box of Physical Damage (unresisted) for every 30 seconds they are exposed to the allergen. First Aid, Medicine, or magical means can stop the damage taken from the anaphylactic shock.",
+        cost: 20,
+      },
+      {
+        name: "Common, Mild",
+        id: QualitySubqualityEnum.Alergy_Common_Mild,
+        description:
+          "The substance or condition is prevalent in the local environment. Examples: sunlight, seafood, bees, pollen, pollutants, Wi-Fi sensitivity, soy, wheat. Symptoms are discomfiting and distracting. Apply a -2 dice pool modifier to the character's Physical Tests while under the effects of the Allergy.",
+        cost: 10,
+      },
+      {
+        name: "Common, Moderate",
+        id: QualitySubqualityEnum.Alergy_Common_Moderate,
+        description:
+          "The substance or condition is prevalent in the local environment. Examples: sunlight, seafood, bees, pollen, pollutants, Wi-Fi sensitivity, soy, wheat. Contact with the allergen produces intense pain. Apply a -4 dice pool modifier to all Physical Tests made while a character experiences the symptoms.",
+        cost: 15,
+      },
+      {
+        name: "Common, Severe",
+        id: QualitySubqualityEnum.Alergy_Common_Severe,
+        description:
+          "The substance or condition is prevalent in the local environment. Examples: sunlight, seafood, bees, pollen, pollutants, Wi-Fi sensitivity, soy, wheat. Contact with the allergen results in extreme pain and actual physical damage. Apply a -4 dice pool modifier to all tests made while a character experiences symptoms. The character also suffers 1 box of Physical Damage (unresisted) for every 1 minute they are exposed to the allergen.",
+        cost: 20,
+      },
+      {
+        name: "Common, Extreme",
+        id: QualitySubqualityEnum.Alergy_Common_Extreme,
+        description:
+          "The substance or condition is prevalent in the local environment. Examples: sunlight, seafood, bees, pollen, pollutants, Wi-Fi sensitivity, soy, wheat. A character at this level, when exposed to the allergen, goes into full anaphylactic shock. The character receives a -6 dice pool modifier for anything they do. The character is considered to be in excruciating agony. The character suffers 1 box of Physical Damage (unresisted) for every 30 seconds they are exposed to the allergen. First Aid, Medicine, or magical means can stop the damage taken from the anaphylactic shock.",
+        cost: 25,
+      },
     ],
   },
   {
@@ -494,13 +638,46 @@ export const Qualities: Array<IQuality> = [
     cost: [5, 7, 10, 3, 5, 8],
     description:
       "With this quality the character is Prejudiced against members of a specific group of people: metahumans, Awakened, non-metahuman sapient critters, or some other group. The character is not merely intolerant—he is outspoken about his beliefs and may actively work against the target of his prejudice. Depending upon the degree of prejudice, this quality can get the character into trouble for expressing his views or when forced to confront the targets of his prejudice. The Karma bonus granted by this quality varies depending upon how common the hated group is, how often the character is likely to encounter members of the group, and the to which the character is openly antagonistic toward them. Refer to the Prejudiced Table to determine the Karma value of the quality based on the prevalence of the hated group and the degree of prejudice. When dealing with the target of their prejudice, a character receives a -2 dice pool modifier per level of severity of the Prejudiced quality for all Social Tests. If negotiations are a part of the encounter, the target receives a +2 modifier per level of the Prejudiced quality. So if a character who is radical in their prejudiced views against the Awakened tries to negotiate with the targetof their prejudice, they receive a -6 to their Negotiation Test while the target receives a +6 dice pool modifier.",
-    subchoices: [
-      "Common group, Biased",
-      "Common group, Outspoken",
-      "Common group, Radical",
-      "Specific group, Biased",
-      "Specific group, Outspoken",
-      "Specific group, Radical",
+    subqualities: [
+      {
+        name: "Common group, Biased",
+        id: QualitySubqualityEnum.Prejudiced_CommonGroup_Biased,
+        description: "e.g, humans, metahumans - closet meta-hater",
+        cost: 5,
+      },
+      {
+        name: "Common group, Outspoken",
+        id: QualitySubqualityEnum.Prejudiced_CommonGroup_Outspoken,
+        description: "e.g, humans, metahumans - typical member of Humanis",
+        cost: 7,
+      },
+      {
+        name: "Common group, Radical",
+        id: QualitySubqualityEnum.Prejudiced_CommonGroup_Radical,
+        description: "e.g, humans, metahumans - racial supremacist",
+        cost: 10,
+      },
+      {
+        name: "Specific group, Biased",
+        id: QualitySubqualityEnum.Prejudiced_SpecificGroup_Biased,
+        description:
+          "e.g., the Awakened, technomancers, shapeshifters, aspected magicians - closet meta-hater",
+        cost: 3,
+      },
+      {
+        name: "Specific group, Outspoken",
+        id: QualitySubqualityEnum.Prejudiced_SpecificGroup_Outspoken,
+        description:
+          "e.g., the Awakened, technomancers, shapeshifters, aspected magicians - typical member of Humanis",
+        cost: 5,
+      },
+      {
+        name: "Specific group, Radical",
+        id: QualitySubqualityEnum.Prejudiced_SpecificGroup_Radical,
+        description:
+          "e.g., the Awakened, technomancers, shapeshifters, aspected magicians - racial supremacist",
+        cost: 8,
+      },
     ],
   },
   {
@@ -510,12 +687,37 @@ export const Qualities: Array<IQuality> = [
     cost: 10,
     description:
       "A Scorched character is coping with neurological problems brought on by damage caused in some way by Black IC, Psychotropic IC, or BTL. The problem can manifest as short- or long-term memory loss, unexpected blackouts, frequent migraines, diminished senses (sight, touch, smell, etc.), and mood disorders such as paranoia and anxiety. The player chooses one specific effect of Scorched, and its effect should be pronounced enough to hinder the character and present potential plot hooks for the gamemaster. Whenever he enters VR or slots a BTL chip, the character must make a Body + Willpower (4) Test. On a failed roll, he experiences the specified physical effects for six hours. A glitch or critical glitch on this test results in suffering the effects for 24 hours. The only way to eliminate the Scorched quality is to get the medical treatment necessary to repair the damage, then spend the Karma to buy off the Negative quality. Once Scorched, though, the character remains susceptible to the condition. Another bad encounter with Black or Psychotropic IC or a BTL will bring this quality back. In addition to the physical side effects the character may experience from being Scorched, the character is vulnerable to damage inflicted by either Black or Psychotropic IC or BTLs. When faced with this IC, the character must make a Willpower (3) Test to be able to confront it without panicking. If he is able to confront the IC that caused their Scorched condition, the character suffers a -2 to Damage Resistance Tests when these programs are inflicting damage. To take the Scorched quality for BTLs, the character must have at least a Mild Addiction to BTLs and possess the gear necessary to use BTLs. To take the Scorched quality for Black and/or Psychotropic IC, the character must be either a decker or a technomancer.",
-    subchoices: [
-      "Memory Loss: (short term) - The character does not remember slotting a BTL chip. The character makes another Withdrawal Test immediately. A failed test means the craving comes back immediately, as do the symptoms of withdrawal. Character must slot another chip. For encountering IC, a character must make a Memory Test with a threshold increased by +1. A failed Memory Test results in gaps in memory and possible disorientation while in host.",
-      "Memory Loss: (long term) - The same effects of Memory Loss (short term) apply. In addition, for the duration of the effect, the character loses access to one active skill. He simply does not remember how to use it (for example, the Pistols skill). Treat as unaware in that skill until symptoms abate.",
-      "Blackout - For the duration of the effect, the character retains no memories of events during that time frame. Memory cannot be restored by technological or magical means.",
-      "Migraines - The character receives -2 to all Physical and Mental tests, sensitivity to light, and nausea",
-      "Paranoia/Anxiety - Character must make Social Tests for even basic interactions. These are Success Tests with a threshold of 5. If no apparent skill applies, the character must default to Charisma -1. Failure means the character reacts with paranoia or anxiety in that situation for the duration of the effect.",
+    subqualities: [
+      {
+        name: "Memory Loss: (short term)",
+        id: QualitySubqualityEnum.Scorched_MemoryLossShort,
+        description:
+          "The character does not remember slotting a BTL chip. The character makes another Withdrawal Test immediately. A failed test means the craving comes back immediately, as do the symptoms of withdrawal. Character must slot another chip. For encountering IC, a character must make a Memory Test with a threshold increased by +1. A failed Memory Test results in gaps in memory and possible disorientation while in host.",
+      },
+      {
+        name: "Memory Loss: (long term)",
+        id: QualitySubqualityEnum.Scorched_MemoryLossLong,
+        description:
+          "The same effects of Memory Loss (short term) apply. In addition, for the duration of the effect, the character loses access to one active skill. He simply does not remember how to use it (for example, the Pistols skill). Treat as unaware in that skill until symptoms abate.",
+      },
+      {
+        name: "Blackout",
+        id: QualitySubqualityEnum.Scorched_Blackout,
+        description:
+          "For the duration of the effect, the character retains no memories of events during that time frame. Memory cannot be restored by technological or magical means.",
+      },
+      {
+        name: "Migraines",
+        id: QualitySubqualityEnum.Scorched_Migraines,
+        description:
+          "The character receives -2 to all Physical and Mental tests, sensitivity to light, and nausea",
+      },
+      {
+        name: "Paranoia/Anxiety",
+        id: QualitySubqualityEnum.Scorched_ParanoiaAnxiety,
+        description:
+          "Character must make Social Tests for even basic interactions. These are Success Tests with a threshold of 5. If no apparent skill applies, the character must default to Charisma -1. Failure means the character reacts with paranoia or anxiety in that situation for the duration of the effect.",
+      },
     ],
   },
   {
@@ -541,10 +743,35 @@ export const Qualities: Array<IQuality> = [
     cost: [5, 10, 15, 25],
     description:
       "There are four types of SINs that fall under the SINner (Layered) quality: National SIN, Criminal SIN (either Corporate or National), Corporate Limited SIN, or Corporate Born. Individuals with SINs are required by law to always broadcast their SINs. A legal SIN is required for all legal purchases. This makes them very useful things to have, so those who are SINless generally get by with the use of fake SINs just so they can participate in society.",
-    subchoices: [
-      "NATIONAL SIN - At the 5 Karma level, the character has what is called a National SIN. The character's parents were legal citizens of a nation (such as the UCAS or CAS) and he has been a citizen of that nation from birth. He has the right to vote, qualify for passports issued by his nation, enlist in the national military, or work in the national government. A National SIN is required for any national security clearance or any form of national military career. A character with a National SIN pays fifteen percent of their gross income in taxes. He is also in no way connected to any of the megacorporations. The main drawback to having a legal National SIN is the character is in the system. The nation in the player character's background has the character's biometric data (DNA, fingerprints, retinal scans) on file, and that biometric data is shared with law enforcement agencies through the Global SIN Registry. This makes it much easier to track a character should a job go sideways. Also, nations typically sell the personal information tied to the character's SIN to corporations. Those with a legal SIN get nearly three times as much spam as those who don't have a SIN or rely on fake SINs, and the spam messages they receive are disturbingly tailored to their preferences (based on their buying and browsing habits).",
-      "CRIMINAL SIN - At the 10 Karma level, the character has a Criminal SIN (either Corporate or National); his Criminal SIN replaces any previous SIN. At some point in his life, the character was arrested and served time for a felony-level offense and was branded a criminal for the rest of his life. He is legally required to broadcast his Criminal SIN at all times; failure to do so is a felony and can lead to re-incarceration. He is shunned by law-abiding society. Law-abiding citizens will, if they must, deal with a SIN-less character before they'd have any interaction with a known criminal. With his Criminal SIN, the character will experience prejudiced views, suspicion, and/or open hostility from most people with SINs. He will often be denied entry to certain locations (high-end stores, car dealerships, museums, galleries, etc.) and will have difficulty finding legal employment. He can expect to be brought in and held up to 48 hours for questioning anytime a crime is committed in his area. The judicial system in 2075 is more an assembly line than institution of justice. Suspects are treated as guilty unless proven innocent, plausible  evidence is often sufficient for conviction, and sentencing has more to do with the judge's mood than the crime. In this environment it's likely the cops will be more interested in closing the case than solving any crime; they may try to pin crimes on the character with the Criminal SIN whether or not she had anything to do with it. Some degree of “adjusting” facts and “interpreting” witness accounts to support allegations is common; fabricating evidence, if only to meet conviction productivity goals, is not rare. Magic users tend to receive much harsher treatment from the judicial system than mundane criminals. If the character is a magic user with a Criminal SIN, he is registered with local law enforcement. He can expect regular—but usually not scheduled—checks to confirm he lives and to ensure he is not using forbidden spell formula, foci, or other magical gear. The nation or corporation that issued the Criminal SIN will keep close tabs on the character, if he fails to update residential information or appears in any way to be trying to evade their oversight, he is subject to arrest. He is also required to pay a fifteen percent tax on his gross income to the entity that issued his Criminal SIN.",
-      "CORPORATE LIMITED SIN - At the 15 Karma level the character has the Corporate Limited SIN; he has somehow gained a position in a megacorporation from the outside. He may have been hired as a wageslave (or been the minor child of a person hired as a wageslave), or perhaps brought in by someone in the megacorp who saw advantage in his skill, talent, area of expertise, or some other useful attribute. Under most circumstances the Corporate Limited SIN replaces any National SIN. His Corporate Limited SIN becomes part of the Global SIN Registry, to which law enforcement agencies and security corporations alike have access. Many of these Corporate Limited SINs record whether or not the character is Awakened. The Corporate Limited SIN allows the character to be employed by the megacorp under most circumstances, and it replaces any National SIN that the character may have had previously. With the Corporate SIN, the character can be gainfully employed by the issuing megacorporation as a wageslave, a low-ranking member of the corporation's security services, or an enlisted member of the corporation's military. Though he could have a secret-level security clearance to perform his duties, he cannot rise to a leadership position, become an officer, or be part of the megacorporation's Special Forces (such as the Red Samurai). As a group, characters that possess Corporate Limited SINs are believed to either know something valuable about the inner workings of the megacorporation or have a skill set rival megacorps would want; as such they are considered valid targets for extraction, even if they are no longer active with the corporation. Characters with the Corporate Limited SIN experience prejudice and hostility from those in the shadows who are SINless. The SINless believe the corporations deliberately keep them poor and powerless so they can be exploited. The character with the Corporate Limited SIN may find himself being personally blamed for his corporation's actions—protesting he has no real authority and no connection with the actions in question usually does little good. To the SINless and neo-anarchists the character with the Corporate Limited SIN has sold out and chosen a corrupt and oppressive system over his own people. The character pays twenty percent of his gross income in taxes to his megacorporation.",
+    subqualities: [
+      {
+        name: "NATIONAL SIN",
+        id: QualitySubqualityEnum.SINnerLayered_NationalSIN,
+        description:
+          "The character has what is called a National SIN. The character's parents were legal citizens of a nation (such as the UCAS or CAS) and he has been a citizen of that nation from birth. He has the right to vote, qualify for passports issued by his nation, enlist in the national military, or work in the national government. A National SIN is required for any national security clearance or any form of national military career. A character with a National SIN pays fifteen percent of their gross income in taxes. He is also in no way connected to any of the megacorporations. The main drawback to having a legal National SIN is the character is in the system. The nation in the player character's background has the character's biometric data (DNA, fingerprints, retinal scans) on file, and that biometric data is shared with law enforcement agencies through the Global SIN Registry. This makes it much easier to track a character should a job go sideways. Also, nations typically sell the personal information tied to the character's SIN to corporations. Those with a legal SIN get nearly three times as much spam as those who don't have a SIN or rely on fake SINs, and the spam messages they receive are disturbingly tailored to their preferences (based on their buying and browsing habits).",
+        cost: 5,
+      },
+      {
+        name: "CRIMINAL SIN",
+        id: QualitySubqualityEnum.SINnerLayered_CriminalSIN,
+        description:
+          "The character has a Criminal SIN (either Corporate or National); his Criminal SIN replaces any previous SIN. At some point in his life, the character was arrested and served time for a felony-level offense and was branded a criminal for the rest of his life. He is legally required to broadcast his Criminal SIN at all times; failure to do so is a felony and can lead to re-incarceration. He is shunned by law-abiding society. Law-abiding citizens will, if they must, deal with a SIN-less character before they'd have any interaction with a known criminal. With his Criminal SIN, the character will experience prejudiced views, suspicion, and/or open hostility from most people with SINs. He will often be denied entry to certain locations (high-end stores, car dealerships, museums, galleries, etc.) and will have difficulty finding legal employment. He can expect to be brought in and held up to 48 hours for questioning anytime a crime is committed in his area. The judicial system in 2075 is more an assembly line than institution of justice. Suspects are treated as guilty unless proven innocent, plausible  evidence is often sufficient for conviction, and sentencing has more to do with the judge's mood than the crime. In this environment it's likely the cops will be more interested in closing the case than solving any crime; they may try to pin crimes on the character with the Criminal SIN whether or not she had anything to do with it. Some degree of “adjusting” facts and “interpreting” witness accounts to support allegations is common; fabricating evidence, if only to meet conviction productivity goals, is not rare. Magic users tend to receive much harsher treatment from the judicial system than mundane criminals. If the character is a magic user with a Criminal SIN, he is registered with local law enforcement. He can expect regular—but usually not scheduled—checks to confirm he lives and to ensure he is not using forbidden spell formula, foci, or other magical gear. The nation or corporation that issued the Criminal SIN will keep close tabs on the character, if he fails to update residential information or appears in any way to be trying to evade their oversight, he is subject to arrest. He is also required to pay a fifteen percent tax on his gross income to the entity that issued his Criminal SIN.",
+        cost: 10,
+      },
+      {
+        name: "CORPORATE LIMITED SIN",
+        id: QualitySubqualityEnum.SINnerLayered_CorporateLimitedSIN,
+        description:
+          "The character has the Corporate Limited SIN; he has somehow gained a position in a megacorporation from the outside. He may have been hired as a wageslave (or been the minor child of a person hired as a wageslave), or perhaps brought in by someone in the megacorp who saw advantage in his skill, talent, area of expertise, or some other useful attribute. Under most circumstances the Corporate Limited SIN replaces any National SIN. His Corporate Limited SIN becomes part of the Global SIN Registry, to which law enforcement agencies and security corporations alike have access. Many of these Corporate Limited SINs record whether or not the character is Awakened. The Corporate Limited SIN allows the character to be employed by the megacorp under most circumstances, and it replaces any National SIN that the character may have had previously. With the Corporate SIN, the character can be gainfully employed by the issuing megacorporation as a wageslave, a low-ranking member of the corporation's security services, or an enlisted member of the corporation's military. Though he could have a secret-level security clearance to perform his duties, he cannot rise to a leadership position, become an officer, or be part of the megacorporation's Special Forces (such as the Red Samurai). As a group, characters that possess Corporate Limited SINs are believed to either know something valuable about the inner workings of the megacorporation or have a skill set rival megacorps would want; as such they are considered valid targets for extraction, even if they are no longer active with the corporation. Characters with the Corporate Limited SIN experience prejudice and hostility from those in the shadows who are SINless. The SINless believe the corporations deliberately keep them poor and powerless so they can be exploited. The character with the Corporate Limited SIN may find himself being personally blamed for his corporation's actions—protesting he has no real authority and no connection with the actions in question usually does little good. To the SINless and neo-anarchists the character with the Corporate Limited SIN has sold out and chosen a corrupt and oppressive system over his own people. The character pays twenty percent of his gross income in taxes to his megacorporation.",
+        cost: 15,
+      },
+      {
+        name: "CORPORATE SIN",
+        id: QualitySubqualityEnum.SINnerLayered_CorporateSIN,
+        description:
+          "The character has the Corporate Born SIN. The character with this ID was probably born into a mega corporation, or belonged to one when it achieved extra-territoriality. At least one of his parents probably had the Corporate Born SIN as well. He grew up in the corporation, his social involvement, education, and almost every aspect of his life was managed by the corporation. His skills and aptitudes were evaluated constantly, and he was groomed for the career path to which he was best suited; his whole world was the corporation. Characters with the Corporate Born SIN had the potential and the opportunity to advance through the corporation hierarchy. He could have been a department administrator, a finance strategist, an agent of corporate intelligence, an officer in a megacorp's military, or even a member of Corporate Special Forces (Renraku's Red Samurai or Ares' Firewatch). With a Corporate Born SIN, he could have enjoyed top-secret clearance within the corporation and access to nearly unlimited resources. Then something happened. An unforgivably costly mistake, the machinations of a rival, a supervisor in need of a scapegoat—something pushed the character out of the corporation and into the cold and unforgiving shadows. In the shadows a SIN that had been the key to opportunity is now a deadly liability. Most in the shadows see the Corporate Born as the privileged few, the aristocrats in the armored limousines who look down on them, oppress them, exploit them and deny them their basic rights. If the SINless discover the character's Corporate Born SIN, reactions will range from deep suspicion to violent hostility; serious injury and death are real possibilities. The character's loyalty to his corporation is never questioned, which can be an insurmountable liability in a culture that works against the megacorps. Would-be runners have been killed for holding Corporate Born SINs. Fortunately, Corporate Born records are limited to the megacorporation that generated them. Files in the Global SIN Registry can confirm she has a valid SIN, but do not contain any additional information. Those with Corporate Born SINs pay a tax of ten percent of their gross income to their corporation.",
+        cost: 25,
+      },
     ],
   },
   {
@@ -596,3 +823,11 @@ export const Qualities: Array<IQuality> = [
       "A character with a Weak Immune System has reduced resistance to infections and disease. Increase the Power of any disease by +2 for every Resistance Test. A character with Weak Immune System cannot take the Natural Immunity or Resistance to Pathogens/Toxins qualities. A Weak Immune System often results from immune-suppression treatments used in cybersurgery and bio-genetic procedures, so it is reasonable to believe that characters that have undergone extensive body modifications are more likely to acquire this quality.",
   },
 ];
+
+// sanity check here to catch bugs, previously I was doing a .find() on this array and was modifying the result
+// now that it is frozen the elements of this array can't be modified
+for (const quality of unfrozenQualities) {
+  Object.freeze(quality);
+}
+
+export const Qualities = unfrozenQualities;
