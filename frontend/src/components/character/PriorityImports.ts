@@ -79,7 +79,7 @@ export interface IPriorityRow {
   resources: number;
 }
 
-export const priorityOptions: IPriorityRow[] = [
+export const priorityOptions: Array<IPriorityRow> = [
   {
     priority: PriorityLevelEnum.A,
     metatypeInfo: [

@@ -203,7 +203,7 @@ const PrioritySelect = function (props: IProps) {
     const magicRow = priorityOptions.find(
       (row) => row.priority === priorities[PrioritiesEnum.Magic]
     );
-    let magicArray: string[];
+    let magicArray: Array<string>;
     if (!magicRow) {
       magicArray = ["Error"];
     } else {

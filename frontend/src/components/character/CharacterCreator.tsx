@@ -11,6 +11,7 @@ import {
 import type { IPriorities } from "./PriorityImports.js";
 import "./CharacterCreator.css";
 import React from "react";
+import { QualitiesSelect } from "./QualitiesSelect.js";
 
 const characterCreatorPath = "/character_creator";
 const CharacterCreator = function () {
@@ -40,10 +41,10 @@ const CharacterCreator = function () {
     });
   const [page, setPage] = useState(0);
   const firstPage = 0;
-  const lastPage = 1;
+  const lastPage = 2;
   let currentStage;
   switch (page) {
-    case 0:
+    case firstPage:
       currentStage = (
         <PrioritySelect
           priorityInfo={priorityInfo}
@@ -74,6 +75,9 @@ const CharacterCreator = function () {
           }
         />
       );
+      break;
+    case lastPage:
+      currentStage = <QualitiesSelect />;
       break;
     default:
       currentStage = (
