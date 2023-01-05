@@ -12,12 +12,12 @@ jest.mock("react-router-dom", () => ({
 
 beforeEach(() => jest.clearAllMocks());
 
-test("Character Creator page default display", () => {
+test("Default display", () => {
   renderWithProviders(<CharacterCreator />);
   showPage1();
 });
 
-test("Character Creator page change page to attributes", () => {
+test("Change page to attributes", () => {
   renderWithProviders(<CharacterCreator />);
 
   const next: HTMLButtonElement = screen.getByText("Next");
@@ -26,14 +26,26 @@ test("Character Creator page change page to attributes", () => {
   showPage2();
 });
 
-test("Character Creator page change page back to default", () => {
+test("Change page to qualities", () => {
+  renderWithProviders(<CharacterCreator />);
+
+  const next: HTMLButtonElement = screen.getByText("Next");
+  fireEvent.click(next);
+  fireEvent.click(next);
+
+  showPage3();
+});
+
+test("Change page back to default", () => {
   renderWithProviders(<CharacterCreator />);
 
   const next: HTMLButtonElement = screen.getByText("Next");
   const previous: HTMLButtonElement = screen.getByText("Previous");
   fireEvent.click(next);
+  fireEvent.click(next);
   fireEvent.click(previous);
-
+  showPage2();
+  fireEvent.click(previous);
   showPage1();
 });
 
@@ -91,4 +103,16 @@ function showPage2() {
   expect(charismaSelect).toBeInTheDocument();
   expect(screen.getByText(/edge - /i)).toBeInTheDocument();
   expect(edgeSelect).toBeInTheDocument();
+}
+
+function showPage3() {
+  const positiveSelect: HTMLSelectElement =
+    screen.getByTestId("newPositiveQuality");
+  const negativeSelect: HTMLSelectElement =
+    screen.getByTestId("newNegativeQuality");
+
+  expect(screen.getByText(/Positive Qualities/i)).toBeInTheDocument();
+  expect(positiveSelect).toBeInTheDocument();
+  expect(screen.getByText(/Negative Qualities/i)).toBeInTheDocument();
+  expect(negativeSelect).toBeInTheDocument();
 }

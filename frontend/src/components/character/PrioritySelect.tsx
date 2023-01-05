@@ -157,7 +157,7 @@ const resourcesSummaries = priorityOptions.map((priorityList) => {
 
 interface IProps {
   priorityInfo: IPriorities;
-  setPriorityInfo: React.Dispatch<React.SetStateAction<IPriorities>>;
+  setPriorityInfo: (loadingPriorities: IPriorities) => void;
 }
 
 const PrioritySelect = function (props: IProps) {
@@ -183,7 +183,7 @@ const PrioritySelect = function (props: IProps) {
     }
 
     const metatypeRow = priorityOptions.find(
-      (row) => row.priority === priorities[PrioritiesEnum.Metatype]
+      (row) => row.priority === newPriorities[PrioritiesEnum.Metatype]
     );
 
     const priority = props.priorityInfo;

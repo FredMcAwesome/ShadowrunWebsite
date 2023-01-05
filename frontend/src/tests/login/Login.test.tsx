@@ -25,13 +25,13 @@ afterEach(() => {
   clearUserSession();
 });
 
-test("Login page default display", () => {
+test("Default display", () => {
   renderWithProviders(<Login />);
 
   expect(screen.getByText(/login/i)).toBeInTheDocument();
 });
 
-test("login page with correct credentials", async () => {
+test("Login with correct credentials", async () => {
   const handlers = [
     rest.post(postLogin, (_req, res, ctx) => {
       return res(ctx.json(token), ctx.delay(50));
@@ -49,7 +49,7 @@ test("login page with correct credentials", async () => {
   await waitFor(() => expect(mockedUsedNavigate).toHaveBeenCalled());
 });
 
-test("login page with incorrect credentials", async () => {
+test("Login with invalid credentials", async () => {
   const handlers = [
     rest.post(postLogin, (_req, res, ctx) => {
       return res(ctx.status(401), ctx.delay(50));

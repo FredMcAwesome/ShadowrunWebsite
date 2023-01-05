@@ -348,11 +348,11 @@ function checkSpecialMaximums(
 interface IProps {
   priorityInfo: IPriorities;
   attributeInfo: IAttributes;
-  setAttributeInfo: React.Dispatch<React.SetStateAction<IAttributes>>;
+  setAttributeInfo: (loadingAttributes: IAttributes) => void;
   specialAttributeInfo: ISpecialAttributes;
-  setSpecialAttributeInfo: React.Dispatch<
-    React.SetStateAction<ISpecialAttributes>
-  >;
+  setSpecialAttributeInfo: (
+    loadingSpecialAttributes: ISpecialAttributes
+  ) => void;
   maxAttributePoints: number;
   maxSpecialAttributePoints: number;
   magicInfo: IMagicInfo;

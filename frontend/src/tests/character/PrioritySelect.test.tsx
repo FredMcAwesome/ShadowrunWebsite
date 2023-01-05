@@ -7,7 +7,7 @@ import {
   MagicTypeEnum,
 } from "../../components/character/PriorityImports.js";
 
-test("Priority Select change metatype priority", () => {
+test("Change metatype priority", () => {
   defaultPageRender();
   const metatypeSelect: HTMLSelectElement = screen.getByTestId("metatype");
   const resourcesSelect: HTMLSelectElement = screen.getByTestId("resources");
@@ -32,7 +32,7 @@ test("Priority Select change metatype priority", () => {
   expect(resourcesSelect.value).toContain("A - ");
 });
 
-test("Priority Select change metatype option", () => {
+test("Change metatype option", () => {
   defaultPageRender();
   const metatypeOptionsSelect: HTMLSelectElement =
     screen.getByTestId("metatypeOptions");
@@ -49,7 +49,7 @@ test("Priority Select change metatype option", () => {
   expect(metatypeOptionsSelect.value).toContain("Troll");
 });
 
-test("Priority Select change attributes priority", () => {
+test("Change attributes priority", () => {
   defaultPageRender();
   const attributesSelect: HTMLSelectElement = screen.getByTestId("attributes");
   const resourcesSelect: HTMLSelectElement = screen.getByTestId("resources");
@@ -68,7 +68,7 @@ test("Priority Select change attributes priority", () => {
   expect(resourcesSelect.value).toContain("B - ");
 });
 
-test("Priority Select change magic priority", () => {
+test("Change magic priority", () => {
   defaultPageRender();
   const magicSelect: HTMLSelectElement = screen.getByTestId("magic");
   const resourcesSelect: HTMLSelectElement = screen.getByTestId("resources");
@@ -87,7 +87,7 @@ test("Priority Select change magic priority", () => {
   expect(resourcesSelect.value).toContain("C - ");
 });
 
-test("Priority Select change magic option", () => {
+test("Change magic option", () => {
   defaultPageRender();
   const magicOptionsSelect: HTMLSelectElement =
     screen.getByTestId("magicOptions");
@@ -104,7 +104,7 @@ test("Priority Select change magic option", () => {
   expect(magicOptionsSelect.value).toContain("Magician");
 });
 
-test("Priority Select change skills priority", () => {
+test("Change skills priority", () => {
   defaultPageRender();
   const skillsSelect: HTMLSelectElement = screen.getByTestId("skills");
   const resourcesSelect: HTMLSelectElement = screen.getByTestId("resources");
@@ -123,7 +123,7 @@ test("Priority Select change skills priority", () => {
   expect(resourcesSelect.value).toContain("D - ");
 });
 
-test("Priority Select change resources priority", () => {
+test("Change resources priority", () => {
   defaultPageRender();
   const resourcesSelect: HTMLSelectElement = screen.getByTestId("resources");
   const attributesSelect: HTMLSelectElement = screen.getByTestId("attributes");

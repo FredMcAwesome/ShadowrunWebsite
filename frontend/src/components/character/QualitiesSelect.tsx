@@ -5,21 +5,21 @@ import Dropdown from "react-dropdown";
 
 export interface ISelectedQuality extends IQuality {
   costSelected?: number;
-  rankSelected?: number;
+  ratingSelected?: number;
   subqualitySelected?: ISubquality;
 }
 
 interface IProps {
   karmaPoints: number;
-  setKarmaPoints: React.Dispatch<React.SetStateAction<number>>;
+  setKarmaPoints: (loadingKarma: number) => void;
   positiveQualitiesSelected: Array<ISelectedQuality>;
-  setPositiveQualitiesSelected: React.Dispatch<
-    React.SetStateAction<Array<ISelectedQuality>>
-  >;
+  setPositiveQualitiesSelected: (
+    loadingPositiveQualities: Array<ISelectedQuality>
+  ) => void;
   negativeQualitiesSelected: Array<ISelectedQuality>;
-  setNegativeQualitiesSelected: React.Dispatch<
-    React.SetStateAction<Array<ISelectedQuality>>
-  >;
+  setNegativeQualitiesSelected: (
+    loadingNegativeQualities: Array<ISelectedQuality>
+  ) => void;
 }
 
 export const QualitiesSelect = function (props: IProps) {
@@ -77,7 +77,7 @@ interface ISubqualityProps {
   qualitiesList: ISelectedQuality[];
   index: number;
   setKarma: (removeKarma: boolean, difference: number) => void;
-  setQualities: React.Dispatch<React.SetStateAction<Array<ISelectedQuality>>>;
+  setQualities: (loadingQualities: Array<ISelectedQuality>) => void;
 }
 
 const SubqualitiesComponent = function ({
@@ -119,6 +119,11 @@ const SubqualitiesComponent = function ({
           }
           setQualities(newQualities);
         }}
+        className={
+          quality.subqualitySelected
+            ? QualityEnum[quality.id] + quality.subqualitySelected.name
+            : QualityEnum[quality.id] + "_newSubquality"
+        }
       />
       {quality.subqualitySelected && (
         <p>{quality.subqualitySelected.description}</p>
@@ -132,7 +137,7 @@ interface IKarmaProps {
   qualitiesList: ISelectedQuality[];
   index: number;
   setKarma: (removeKarma: boolean, difference: number) => void;
-  setQualities: React.Dispatch<React.SetStateAction<ISelectedQuality[]>>;
+  setQualities: (loadingQualities: Array<ISelectedQuality>) => void;
 }
 
 const KarmaComponent = function ({
@@ -162,13 +167,18 @@ const KarmaComponent = function ({
             }
             if (
               selectedQuality.maxRating === undefined ||
-              selectedQuality.rankSelected !== undefined
+              selectedQuality.ratingSelected !== undefined
             ) {
-              difference *= selectedQuality.rankSelected || 1;
+              difference *= selectedQuality.ratingSelected || 1;
               setKarma(selectedQuality.positive, difference);
             }
             setQualities(newQualities);
           }}
+          className={
+            quality.costSelected
+              ? QualityEnum[quality.id] + quality.costSelected.toString()
+              : QualityEnum[quality.id] + "_newCost"
+          }
         />
       ) : (
         <span className="karmaCost">
@@ -186,7 +196,7 @@ interface IRatingProps {
   qualitiesList: ISelectedQuality[];
   index: number;
   setKarma: (removeKarma: boolean, difference: number) => void;
-  setQualities: React.Dispatch<React.SetStateAction<ISelectedQuality[]>>;
+  setQualities: (loadingQualities: Array<ISelectedQuality>) => void;
 }
 
 const RatingComponent = function ({
@@ -203,12 +213,12 @@ const RatingComponent = function ({
         options={[...Array(quality.maxRating).keys()].map((rating) =>
           (rating + 1).toString()
         )}
-        value={quality.rankSelected?.toString() || "Select Rating value"}
+        value={quality.ratingSelected?.toString() || "Select Rating value"}
         onChange={(arg) => {
           const newQualities = [...qualitiesList];
-          const currentRanking = qualitiesList[index].rankSelected || 0;
+          const currentRating = qualitiesList[index].ratingSelected || 0;
           const newRating = parseInt(arg.value);
-          newQualities[index].rankSelected = newRating;
+          newQualities[index].ratingSelected = newRating;
 
           let currentCost = 0;
           const selectedQuality = newQualities[index];
@@ -218,11 +228,16 @@ const RatingComponent = function ({
           ) {
             currentCost =
               selectedQuality.costSelected || (selectedQuality.cost as number);
-            const difference = currentCost * (newRating - currentRanking);
+            const difference = currentCost * (newRating - currentRating);
             setKarma(selectedQuality.positive, difference);
           }
           setQualities(newQualities);
         }}
+        className={
+          quality.ratingSelected
+            ? QualityEnum[quality.id] + quality.ratingSelected.toString()
+            : QualityEnum[quality.id] + "_newRating"
+        }
       />
     </p>
   );
@@ -232,7 +247,7 @@ interface IQualityDropdownProps {
   positive: boolean;
   currentValue: string;
   qualitiesList: ISelectedQuality[];
-  setQualities: React.Dispatch<React.SetStateAction<ISelectedQuality[]>>;
+  setQualities: (loadingQualities: Array<ISelectedQuality>) => void;
   setKarma: (removeKarma: boolean, difference: number) => void;
   index: number;
 }
@@ -249,7 +264,10 @@ function QualityDropdownComponent({
     <Dropdown
       options={Qualities.filter((quality) => quality.positive === positive).map(
         (quality) => {
-          return { label: quality.name, value: QualityEnum[quality.id] };
+          return {
+            label: quality.name,
+            value: QualityEnum[quality.id],
+          };
         }
       )}
       value={currentValue}
@@ -292,14 +310,20 @@ function QualityDropdownComponent({
               oldQuality.subqualities || typeof oldQuality.cost !== "number"
                 ? oldQuality.costSelected || 0
                 : oldQuality.cost || 0;
-            oldCost *= oldQuality.rankSelected || 1;
+            oldCost *= oldQuality.ratingSelected || 1;
             setKarma(newQuality.positive, newCost - oldCost);
           }
         } else {
           console.error("Quality: " + arg.label + " not found");
         }
       }}
-      className={positive ? "positiveQualities" : "negativeQualities"}
+      className={
+        currentValue.startsWith("Select")
+          ? positive
+            ? "newPositiveQuality"
+            : "newNegativeQuality"
+          : currentValue
+      }
     />
   );
 }
@@ -307,7 +331,7 @@ function QualityDropdownComponent({
 interface IQualitySelectionProps {
   positive: boolean;
   qualitiesList: ISelectedQuality[];
-  setQualities: React.Dispatch<React.SetStateAction<ISelectedQuality[]>>;
+  setQualities: (loadingQualities: Array<ISelectedQuality>) => void;
   setKarma: (removeKarma: boolean, difference: number) => void;
   newQualityPlaceholder: { text: string; extra: string };
 }
@@ -370,7 +394,7 @@ const QualitySelectionComponent = function ({
                     removedQuality.costSelected ||
                     (removedQuality.cost as number);
                 }
-                difference *= removedQuality.rankSelected || 1;
+                difference *= removedQuality.ratingSelected || 1;
                 setKarma(!removedQuality.positive, difference);
                 if (qualitiesList.length - 1 === index) {
                   setQualities([...qualitiesList.slice(0, index)]);

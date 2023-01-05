@@ -30,7 +30,7 @@ export enum QualityEnum {
   SpiritAffinity,
   Toughness,
   WillToLive,
-  Addition,
+  Addiction,
   Allergy,
   AstralBeacon,
   BadLuck,
@@ -407,8 +407,8 @@ const unfrozenQualities: Array<IQuality> = [
       "For each rating point in Will to Live, the character gains 1 additional Damage Overflow Box. These additional boxes only allow the character to sustain additional damage before dying; they do not raise the threshold at which the character becomes unconscious or incapacitated, nor do they affect modifiers from the damage the character has taken.",
   },
   {
-    name: "Addition",
-    id: QualityEnum.Addition,
+    name: "Addiction",
+    id: QualityEnum.Addiction,
     positive: false,
     cost: [4, 9, 20, 25],
     description:
@@ -823,6 +823,8 @@ const unfrozenQualities: Array<IQuality> = [
       "A character with a Weak Immune System has reduced resistance to infections and disease. Increase the Power of any disease by +2 for every Resistance Test. A character with Weak Immune System cannot take the Natural Immunity or Resistance to Pathogens/Toxins qualities. A Weak Immune System often results from immune-suppression treatments used in cybersurgery and bio-genetic procedures, so it is reasonable to believe that characters that have undergone extensive body modifications are more likely to acquire this quality.",
   },
 ];
+
+export const firstNegativeQualityIndex = QualityEnum.Addiction;
 
 // sanity check here to catch bugs, previously I was doing a .find() on this array and was modifying the result
 // now that it is frozen the elements of this array can't be modified

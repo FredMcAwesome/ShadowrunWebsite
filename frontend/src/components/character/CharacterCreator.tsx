@@ -47,6 +47,32 @@ const CharacterCreator = function () {
   const [negativeQualitiesSelected, setNegativeQualitiesSelected] = useState<
     Array<ISelectedQuality>
   >([]);
+
+  const onPriorityInfoChange = function (loadingPriorities: IPriorities) {
+    setPriorityInfo(loadingPriorities);
+  };
+  const onAttributeInfoChange = function (loadingAttributes: IAttributes) {
+    setAttributeInfo(loadingAttributes);
+  };
+  const onSpecialAttributeInfoChange = function (
+    loadingSpecialAttributes: ISpecialAttributes
+  ) {
+    setSpecialAttributeInfo(loadingSpecialAttributes);
+  };
+  const onKarmaPointsChange = function (loadingKarma: number) {
+    setKarmaPoints(loadingKarma);
+  };
+  const onPositiveQualitiesSelectedChanges = function (
+    loadingPositiveQualities: Array<ISelectedQuality>
+  ) {
+    setPositiveQualitiesSelected(loadingPositiveQualities);
+  };
+  const onNegativeQualitiesSelectedChanges = function (
+    loadingNegativeQualities: Array<ISelectedQuality>
+  ) {
+    setNegativeQualitiesSelected(loadingNegativeQualities);
+  };
+
   const [page, setPage] = useState(0);
   const firstPage = 0;
   const lastPage = 2;
@@ -56,7 +82,7 @@ const CharacterCreator = function () {
       currentStage = (
         <PrioritySelect
           priorityInfo={priorityInfo}
-          setPriorityInfo={setPriorityInfo}
+          setPriorityInfo={onPriorityInfoChange}
         />
       );
       break;
@@ -65,9 +91,9 @@ const CharacterCreator = function () {
         <AttributesSelect
           priorityInfo={priorityInfo}
           attributeInfo={attributeInfo}
-          setAttributeInfo={setAttributeInfo}
+          setAttributeInfo={onAttributeInfoChange}
           specialAttributeInfo={specialAttributeInfo}
-          setSpecialAttributeInfo={setSpecialAttributeInfo}
+          setSpecialAttributeInfo={onSpecialAttributeInfoChange}
           maxAttributePoints={
             priorityOptions[priorityInfo.AttributesPriority].attributes
           }
@@ -88,11 +114,11 @@ const CharacterCreator = function () {
       currentStage = (
         <QualitiesSelect
           karmaPoints={karmaPoints}
-          setKarmaPoints={setKarmaPoints}
+          setKarmaPoints={onKarmaPointsChange}
           positiveQualitiesSelected={positiveQualitiesSelected}
-          setPositiveQualitiesSelected={setPositiveQualitiesSelected}
+          setPositiveQualitiesSelected={onPositiveQualitiesSelectedChanges}
           negativeQualitiesSelected={negativeQualitiesSelected}
-          setNegativeQualitiesSelected={setNegativeQualitiesSelected}
+          setNegativeQualitiesSelected={onNegativeQualitiesSelectedChanges}
         />
       );
       break;
@@ -100,7 +126,7 @@ const CharacterCreator = function () {
       currentStage = (
         <PrioritySelect
           priorityInfo={priorityInfo}
-          setPriorityInfo={setPriorityInfo}
+          setPriorityInfo={onPriorityInfoChange}
         />
       );
   }

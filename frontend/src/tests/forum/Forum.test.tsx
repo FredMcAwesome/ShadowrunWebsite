@@ -6,7 +6,7 @@ import { ThreadListType } from "@shadowrun/common";
 import { renderWithProviders } from "../../utils/TestingUtils.js";
 import { getThreadList } from "../../utils/api.js";
 
-test("Forum page default display", async () => {
+test("Default display", async () => {
   const handlers = [
     rest.get(getThreadList, (_req, res, ctx) => {
       const threads: ThreadListType = [

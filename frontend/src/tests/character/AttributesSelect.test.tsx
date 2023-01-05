@@ -69,7 +69,7 @@ function defaultPageRender() {
   return container;
 }
 
-test("Attributes Select change body", () => {
+test("Change body", () => {
   defaultPageRender();
   const attributePoints: HTMLSpanElement = screen.getByText(attributePointsMax);
   const startPoints = parseInt(attributePoints.innerHTML);
@@ -87,7 +87,7 @@ test("Attributes Select change body", () => {
   expect(parseInt(attributePoints.innerHTML)).toBe(startPoints - 5);
 });
 
-test("Attributes Select change agility", () => {
+test("Change agility", () => {
   defaultPageRender();
   const attributePoints: HTMLSpanElement = screen.getByText(attributePointsMax);
   const startPoints = parseInt(attributePoints.innerHTML);
@@ -105,7 +105,7 @@ test("Attributes Select change agility", () => {
   expect(parseInt(attributePoints.innerHTML)).toBe(startPoints - 5);
 });
 
-test("Attributes Select change reaction", () => {
+test("Reaction", () => {
   defaultPageRender();
   const attributePoints: HTMLSpanElement = screen.getByText(attributePointsMax);
   const startPoints = parseInt(attributePoints.innerHTML);
@@ -123,7 +123,7 @@ test("Attributes Select change reaction", () => {
   expect(parseInt(attributePoints.innerHTML)).toBe(startPoints - 5);
 });
 
-test("Attributes Select change strength", () => {
+test("Change strength", () => {
   defaultPageRender();
   const attributePoints: HTMLSpanElement = screen.getByText(attributePointsMax);
   const startPoints = parseInt(attributePoints.innerHTML);
@@ -141,7 +141,7 @@ test("Attributes Select change strength", () => {
   expect(parseInt(attributePoints.innerHTML)).toBe(startPoints - 5);
 });
 
-test("Attributes Select change willpower", () => {
+test("Change willpower", () => {
   defaultPageRender();
   const attributePoints: HTMLSpanElement = screen.getByText(attributePointsMax);
   const startPoints = parseInt(attributePoints.innerHTML);
@@ -159,7 +159,7 @@ test("Attributes Select change willpower", () => {
   expect(parseInt(attributePoints.innerHTML)).toBe(startPoints - 5);
 });
 
-test("Attributes Select change logic", () => {
+test("Change logic", () => {
   defaultPageRender();
   const attributePoints: HTMLSpanElement = screen.getByText(attributePointsMax);
   const startPoints = parseInt(attributePoints.innerHTML);
@@ -177,7 +177,7 @@ test("Attributes Select change logic", () => {
   expect(parseInt(attributePoints.innerHTML)).toBe(startPoints - 5);
 });
 
-test("Attributes Select change intuition", () => {
+test("Change intuition", () => {
   defaultPageRender();
   const attributePoints: HTMLSpanElement = screen.getByText(attributePointsMax);
   const startPoints = parseInt(attributePoints.innerHTML);
@@ -195,7 +195,7 @@ test("Attributes Select change intuition", () => {
   expect(parseInt(attributePoints.innerHTML)).toBe(startPoints - 5);
 });
 
-test("Attributes Select change charisma", () => {
+test("Change charisma", () => {
   defaultPageRender();
   const attributePoints: HTMLSpanElement = screen.getByText(attributePointsMax);
   const startPoints = parseInt(attributePoints.innerHTML);
@@ -213,12 +213,12 @@ test("Attributes Select change charisma", () => {
   expect(parseInt(attributePoints.innerHTML)).toBe(startPoints - 5);
 });
 
-test("Attributes Select change edge", () => {
+test("Change edge", () => {
   defaultPageRender();
-  const attributesLine: HTMLSpanElement = screen.getByText(
+  const attributesLine: HTMLParagraphElement = screen.getByText(
     /special attribute points remaining:/i
   );
-  const attributePoints = within(attributesLine).getByText(
+  const attributePoints: HTMLSpanElement = within(attributesLine).getByText(
     specialAttributePointsMax
   );
   const startPoints = parseInt(attributePoints.innerHTML);
@@ -236,12 +236,12 @@ test("Attributes Select change edge", () => {
   expect(parseInt(attributePoints.innerHTML)).toBe(startPoints - 4);
 });
 
-test("Attributes Select change magic", () => {
+test("Change magic", () => {
   defaultPageRender();
-  const attributesLine: HTMLSpanElement = screen.getByText(
+  const attributesLine: HTMLParagraphElement = screen.getByText(
     /special attribute points remaining:/i
   );
-  const attributePoints = within(attributesLine).getByText(
+  const attributePoints: HTMLSpanElement = within(attributesLine).getByText(
     specialAttributePointsMax
   );
   const startPoints = parseInt(attributePoints.innerHTML);
@@ -259,7 +259,7 @@ test("Attributes Select change magic", () => {
   expect(parseInt(attributePoints.innerHTML)).toBe(startPoints - 3);
 });
 
-test("Attributes Select change initiative", () => {
+test("Change initiative (by changing reaction/intuition)", () => {
   const container = defaultPageRender();
   const initiativeSelect: HTMLParagraphElement =
     container.querySelector("#initiative")!;
@@ -284,7 +284,7 @@ test("Attributes Select change initiative", () => {
   expect(initiativeSelect.innerHTML).toBe("11");
 });
 
-test("Attributes Select only 1 stat at max value", () => {
+test("Can only have 1 stat at max value", () => {
   defaultPageRender();
   const bodySelect: HTMLSelectElement = screen.getByTestId("body");
   const agilitySelect: HTMLSelectElement = screen.getByTestId("agility");
@@ -298,7 +298,7 @@ test("Attributes Select only 1 stat at max value", () => {
   expect(within(agilitySelect).queryByText("6")).not.toBeInTheDocument();
 });
 
-test("Attributes Select can only spend up to attribute points", () => {
+test("Can only spend up to attribute points", () => {
   defaultPageRender();
   const attributePoints: HTMLSpanElement = screen.getByText(attributePointsMax);
   const bodySelect: HTMLSelectElement = screen.getByTestId("body");
