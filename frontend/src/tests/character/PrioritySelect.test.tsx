@@ -71,9 +71,14 @@ test("Change attributes priority", () => {
 test("Change magic priority", () => {
   defaultPageRender();
   const magicSelect: HTMLSelectElement = screen.getByTestId("magic");
+  const magicOptionsSelect: HTMLSelectElement =
+    screen.getByTestId("magicOptions");
   const resourcesSelect: HTMLSelectElement = screen.getByTestId("resources");
   expect(magicSelect.value).toContain("C - ");
   expect(resourcesSelect.value).toContain("E - ");
+  expect(
+    within(magicOptionsSelect).getByText(/Technomancer/)
+  ).toBeInTheDocument();
 
   fireEvent.change(magicSelect, {
     target: {
@@ -85,6 +90,9 @@ test("Change magic priority", () => {
   expect(magicSelect.value).toContain("E - ");
   expect(resourcesSelect.value).not.toContain("E - ");
   expect(resourcesSelect.value).toContain("C - ");
+  expect(
+    within(magicOptionsSelect).queryByText(/Technomancer/)
+  ).not.toBeInTheDocument();
 });
 
 test("Change magic option", () => {
@@ -155,5 +163,4 @@ function defaultPageRender() {
   const { container } = renderWithProviders(
     <PrioritySelect priorityInfo={priorityInfo} setPriorityInfo={jest.fn()} />
   );
-  return container;
 }

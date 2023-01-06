@@ -1,6 +1,6 @@
 import { MetatypeEnum } from "./PriorityImports.js";
 import type { IMagicInfo, IPriorities } from "./PriorityImports.js";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Dropdown from "react-dropdown";
 interface IAttributeRange {
   minimum: number;
@@ -268,7 +268,7 @@ export interface ISpecialAttributes {
   magic: number;
 }
 
-enum AttributesEnum {
+export enum AttributesEnum {
   Body,
   Agility,
   Reaction,
@@ -282,7 +282,7 @@ enum AttributesEnum {
 
 const EdgeBaseAttributeIndex = AttributesEnum.AttributesEnumMax;
 
-enum SpecialAttributesEnum {
+export enum SpecialAttributesEnum {
   Edge,
   Magic,
   SpecialAttributesEnumMax,
@@ -647,6 +647,7 @@ const AttributesSelect = function (props: IProps) {
           Attribute Points Remaining:{" "}
           <span id="attribute_points">{attributePoints}</span>
         </p>
+        <p>Only one normal Attribute can be at max</p>
         <div>
           <label htmlFor="body">Body - Resisting physical damage</label>
           <div>
@@ -804,12 +805,10 @@ const AttributesSelect = function (props: IProps) {
         </div>
       </div>
       <div>
-        <div>
-          <p>
-            Special Attribute Points Remaining:{" "}
-            <span id="special_attribute_points">{specialAttributePoints}</span>
-          </p>
-        </div>
+        <p>
+          Special Attribute Points Remaining:{" "}
+          <span id="special_attribute_points">{specialAttributePoints}</span>
+        </p>
         <div id="edge_div">
           <label htmlFor="edge">Edge - Luck</label>
           <div>
@@ -828,29 +827,35 @@ const AttributesSelect = function (props: IProps) {
             className="edge"
           />
         </div>
-        {props.magicInfo.magicRating > 0 && (
-          <div id="magic_div">
-            <label htmlFor="magic">Magic or Resonance - </label>
-            <div>
-              {"Min/Max: " +
-                baseSpecialAttributes[SpecialAttributesEnum.Magic].minimum +
-                "/" +
-                baseSpecialAttributes[SpecialAttributesEnum.Magic].maximum}
-            </div>
-            <Dropdown
-              options={specialAttributeOptions[SpecialAttributesEnum.Magic]}
-              value={specialAttributes[SpecialAttributesEnum.Magic].toString()}
-              onChange={(event) => {
-                changeSpecialAttribute(
-                  SpecialAttributesEnum.Magic,
-                  event.value
-                );
-              }}
-              placeholder={"Select an option"}
-              className="magic"
-            />
-          </div>
-        )}
+        <div id="magic_div">
+          <label htmlFor="magic">Magic or Resonance - </label>
+          {props.magicInfo.magicRating > 0 ? (
+            <Fragment>
+              <div>
+                {"Min/Max: " +
+                  baseSpecialAttributes[SpecialAttributesEnum.Magic].minimum +
+                  "/" +
+                  baseSpecialAttributes[SpecialAttributesEnum.Magic].maximum}
+              </div>
+              <Dropdown
+                options={specialAttributeOptions[SpecialAttributesEnum.Magic]}
+                value={specialAttributes[
+                  SpecialAttributesEnum.Magic
+                ].toString()}
+                onChange={(event) => {
+                  changeSpecialAttribute(
+                    SpecialAttributesEnum.Magic,
+                    event.value
+                  );
+                }}
+                placeholder={"Select an option"}
+                className="magic"
+              />
+            </Fragment>
+          ) : (
+            <p>N/A (Not Awakened)</p>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ import type {
   IMagicInfo,
   IPriorities,
   IPriorityRow,
-  ISkills,
+  ISkillPoints,
   PriorityLevelKey,
 } from "./PriorityImports.js";
 
@@ -201,7 +201,7 @@ const PrioritySelect = function (props: IProps) {
       priority.MetatypeSubselection = MetatypeEnum.Human;
     }
     const magicRow = priorityOptions.find(
-      (row) => row.priority === priorities[PrioritiesEnum.Magic]
+      (row) => row.priority === newPriorities[PrioritiesEnum.Magic]
     );
     let magicArray: Array<string>;
     if (!magicRow) {
@@ -386,7 +386,7 @@ function formatMagic(line: IMagicInfo) {
   return magicianLine;
 }
 
-function formatSkills(line: ISkills) {
+function formatSkills(line: ISkillPoints) {
   return line.skillPoints + "/" + line.skillGroupPoints;
 }
 

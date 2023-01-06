@@ -37,6 +37,7 @@ jest.mock(
       return (
         <select
           data-testid={className}
+          id={className}
           value={optionValueAsString(value)}
           onChange={handleChange}
         >

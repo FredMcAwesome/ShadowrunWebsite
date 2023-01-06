@@ -36,6 +36,17 @@ test("Change page to qualities", () => {
   showPage3();
 });
 
+test("Change page to skills", () => {
+  renderWithProviders(<CharacterCreator />);
+
+  const next: HTMLButtonElement = screen.getByText("Next");
+  fireEvent.click(next);
+  fireEvent.click(next);
+  fireEvent.click(next);
+
+  showPage4();
+});
+
 test("Change page back to default", () => {
   renderWithProviders(<CharacterCreator />);
 
@@ -43,6 +54,9 @@ test("Change page back to default", () => {
   const previous: HTMLButtonElement = screen.getByText("Previous");
   fireEvent.click(next);
   fireEvent.click(next);
+  fireEvent.click(next);
+  fireEvent.click(previous);
+  showPage3();
   fireEvent.click(previous);
   showPage2();
   fireEvent.click(previous);
@@ -115,4 +129,14 @@ function showPage3() {
   expect(positiveSelect).toBeInTheDocument();
   expect(screen.getByText(/Negative Qualities/i)).toBeInTheDocument();
   expect(negativeSelect).toBeInTheDocument();
+}
+
+function showPage4() {
+  expect(screen.getByText(/Combat Skills/i)).toBeInTheDocument();
+  expect(screen.getByText(/Physical Skills/i)).toBeInTheDocument();
+  expect(screen.getByText(/Social Skills/i)).toBeInTheDocument();
+  expect(screen.getByText(/Magical Skills/i)).toBeInTheDocument();
+  expect(screen.getByText(/Resonance Skills/i)).toBeInTheDocument();
+  expect(screen.getByText(/Technical Skills/i)).toBeInTheDocument();
+  expect(screen.getByText(/Vehicle Skills/i)).toBeInTheDocument();
 }

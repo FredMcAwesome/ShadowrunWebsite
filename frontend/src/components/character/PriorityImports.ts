@@ -55,7 +55,7 @@ export interface IMagicInfo {
   other: string;
 }
 
-export interface ISkills {
+export interface ISkillPoints {
   skillPoints: number;
   skillGroupPoints: number;
 }
@@ -75,7 +75,7 @@ export interface IPriorityRow {
   metatypeInfo: Array<IMetatypeInfo>;
   attributes: number;
   magicInfo: Array<IMagicInfo>;
-  skills: ISkills;
+  skills: ISkillPoints;
   resources: number;
 }
 

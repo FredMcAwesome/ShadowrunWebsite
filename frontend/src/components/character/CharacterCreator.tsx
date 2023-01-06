@@ -8,11 +8,13 @@ import {
   MagicTypeEnum,
   priorityOptions,
 } from "./PriorityImports.js";
-import type { IPriorities } from "./PriorityImports.js";
+import type { IPriorities, ISkillPoints } from "./PriorityImports.js";
 import "./CharacterCreator.css";
 import React from "react";
 import { QualitiesSelect } from "./QualitiesSelect.js";
 import type { ISelectedQuality } from "./QualitiesSelect.js";
+import { SkillsSelect } from "./SkillsSelect.js";
+import { IActiveSkill } from "../../data/Skills.js";
 
 const characterCreatorPath = "/character_creator";
 const CharacterCreator = function () {
@@ -47,9 +49,16 @@ const CharacterCreator = function () {
   const [negativeQualitiesSelected, setNegativeQualitiesSelected] = useState<
     Array<ISelectedQuality>
   >([]);
+  const [skillPoints, setSkillPoints] = useState<ISkillPoints>(
+    priorityOptions[priorityInfo.SkillsPriority].skills
+  );
+  const [skillSelections, setSkillSelections] = useState<Array<IActiveSkill>>(
+    []
+  );
 
   const onPriorityInfoChange = function (loadingPriorities: IPriorities) {
     setPriorityInfo(loadingPriorities);
+    setSkillPoints(priorityOptions[loadingPriorities.SkillsPriority].skills);
   };
   const onAttributeInfoChange = function (loadingAttributes: IAttributes) {
     setAttributeInfo(loadingAttributes);
@@ -72,10 +81,13 @@ const CharacterCreator = function () {
   ) {
     setNegativeQualitiesSelected(loadingNegativeQualities);
   };
+  const onSkillPointChange = function (loadingSkillPoints: ISkillPoints) {
+    setSkillPoints(loadingSkillPoints);
+  };
 
   const [page, setPage] = useState(0);
   const firstPage = 0;
-  const lastPage = 2;
+  const lastPage = 3;
   let currentStage;
   switch (page) {
     case firstPage:
@@ -110,7 +122,7 @@ const CharacterCreator = function () {
         />
       );
       break;
-    case lastPage:
+    case 2:
       currentStage = (
         <QualitiesSelect
           karmaPoints={karmaPoints}
@@ -119,6 +131,14 @@ const CharacterCreator = function () {
           setPositiveQualitiesSelected={onPositiveQualitiesSelectedChanges}
           negativeQualitiesSelected={negativeQualitiesSelected}
           setNegativeQualitiesSelected={onNegativeQualitiesSelectedChanges}
+        />
+      );
+      break;
+    case lastPage:
+      currentStage = (
+        <SkillsSelect
+          skillPoints={skillPoints}
+          skillSelections={skillSelections}
         />
       );
       break;
